@@ -1,12 +1,39 @@
 # Dual Model Operation
 
-This document defines how to run a two-role AI workflow.
+This document is the complete operating rule and file contract for a two-role AI workflow.
+It does not depend on a specific vendor or model.
 
-It does not depend on a specific vendor or model. Any combination of AI agents can use it as long as one agent acts as Manager and another acts as Coder.
+The workflow separates direction from implementation:
+
+- Manager decides what should be done, what must not change, and whether work is accepted.
+- Coder implements within the instruction, verifies the result, and reports status.
+
+## Project Objective
+
+This section is the single source of truth for what the project is trying to achieve.
+Keep it outcome-focused. Do not turn it into a task list or implementation plan.
+
+Status: `<Provisional | Confirmed>`
+
+If the user has not specified an objective, the Manager proposes one from the project context and marks it `Provisional`.
+AI agents must not mark a proposed objective `Confirmed` without user confirmation.
+While it is `Provisional`, investigation and reversible preparation may continue, but material direction changes require user confirmation.
+
+Example:
+
+```text
+Make large code changes safer to complete across multiple AI sessions without losing the user's intended outcome.
+```
 
 ## Project Principle
 
-Write the project's most important operating principle here.
+This section is the single source of truth for the project's most important operating principle.
+Do not create another source for the principle in other operation files.
+
+Status: `<Provisional | Confirmed>`
+
+If the user has not specified a principle, the Manager proposes one from the project context and marks it `Provisional`.
+AI agents must not mark a proposed principle `Confirmed` without user confirmation.
 
 Example:
 
@@ -15,81 +42,122 @@ This tool should provide evidence and navigation, not final judgment.
 Uncertain inference must not be silently treated as fact.
 ```
 
-Both Manager and Coder use this principle as a decision boundary.
+Both roles use the principle as a decision boundary.
+While it is `Provisional`, investigation and reversible preparation may continue, but irreversible decisions or material changes to judgment logic require user confirmation.
 
-## Roles
+## Working Files
 
-### Manager
+### `MANAGER_INSTRUCTIONS.md`
 
-The Manager decides direction.
+Updated by the Manager.
+This is the Coder's single current operational contract.
 
-Responsibilities:
+It states:
 
-- Decide goals and priorities.
-- Split large work into bounded phases.
-- State what must not be changed.
-- Define verification and stop conditions.
-- Prevent over-engineering and opportunistic scope growth.
-- Read `CODER_STATUS.md` and write the next `MANAGER_INSTRUCTIONS.md`.
+- The current phase and unique `Instruction ID`
+- The latest status and Manager decision
+- How the current instruction advances the project objective
+- How the project principle applies to the current instruction
+- Important active decisions that future instructions must preserve
+- The concrete instruction, scope, boundaries, and non-goals
+- One to three observable acceptance criteria
+- Verification and stop conditions
 
-The Manager should answer questions such as:
+### `CODER_STATUS.md`
 
-- Should this be done now?
-- How far should this phase go?
-- What must remain unchanged?
-- Does this change follow the project principle?
-- What is the next checkpoint?
+Updated by the Coder.
+This is the report the Manager reads before making the next decision.
 
-### Coder
+It states:
 
-The Coder implements and verifies.
+- Which `Instruction ID` the report answers
+- What changed
+- The result of each acceptance criterion
+- Verification performed
+- Whether work is in progress, blocked, or ready for Manager review
+- Open questions and the Coder's next recommendation
 
-Responsibilities:
+These files are current entry points, not full conversation archives.
 
-- Read `MANAGER_INSTRUCTIONS.md` before starting.
-- Work only inside the specified scope.
-- Run the requested verification.
-- Update `CODER_STATUS.md` after work.
-- Stop and report when a decision is needed.
+## Manager Responsibilities
 
-The Coder should avoid:
+The Manager:
 
-- Design changes outside the instruction scope.
-- Adding new judgment logic without Manager approval.
-- Broad opportunistic cleanup.
-- Continuing after a stop condition is reached.
+- Decides goals, priorities, checkpoints, and non-goals.
+- Keeps each instruction aligned with the current project objective.
+- Uses checkpoints as stable review points, not as requirements for perfect completion.
+- Plans only as far as needed for the next bounded checkpoint.
+- Reconsiders the approach when the same blocker or failure repeats instead of issuing another local patch.
+- Reads the current `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` before writing the next instruction.
+- Confirms that `Based On Instruction ID` matches the current `Instruction ID`.
+- Decides whether a Coder report is `Accepted` or `Needs Follow-up`.
+- Assigns a new `Instruction ID` whenever instructions are updated, even if the checkpoint is unchanged.
+- Carries every active item in `Persistent Decisions` into the next instruction.
+- Removes a persistent decision only after explicitly deciding that it no longer applies.
+- Prevents over-engineering, opportunistic cleanup, and scope growth.
 
-## Shared Rules
+## Coder Responsibilities
 
-- Keep the project principle first.
-- Split large work into checkpoints.
-- Keep instructions and status in files.
-- Coder updates `CODER_STATUS.md` after work.
-- Manager updates `MANAGER_INSTRUCTIONS.md` after decisions.
-- Changes to judgment logic, scoring, ranking, deletion decisions, or promotion rules require Manager approval.
-- If the purpose becomes unclear, stop implementation and return to planning.
+The Coder:
+
+- Reads `MANAGER_INSTRUCTIONS.md` before starting.
+- Copies its `Instruction ID` into `Based On Instruction ID` in `CODER_STATUS.md`.
+- Works only within the stated scope and boundaries.
+- Follows `Persistent Decisions`.
+- Runs the requested verification.
+- Reports `Pass`, `Fail`, or `Not Verified` for each acceptance criterion.
+- Reports implementation status without declaring the phase accepted or authorizing the next phase.
+- Updates `CODER_STATUS.md` after work.
+
+The Coder must not add or change judgment logic, scoring, ranking, deletion decisions, or promotion rules without Manager approval.
+The Coder's next recommendation must stay within the current project objective and must not expand scope by itself.
+
+## Workflow
+
+1. Coder reads `MANAGER_INSTRUCTIONS.md` and records its `Instruction ID`.
+2. Coder implements or investigates only within the stated instruction.
+3. Coder verifies the work and updates `CODER_STATUS.md`.
+4. Manager reads the current instruction and Coder report.
+5. Manager confirms that the instruction IDs match and decides whether the report is accepted or needs follow-up.
+6. Manager updates `MANAGER_INSTRUCTIONS.md` with a new `Instruction ID` and carries forward active persistent decisions.
+7. Repeat from step 1.
 
 ## Stop And Recheck
 
-The Coder stops and reports in `CODER_STATUS.md` when:
+Use three responses. Add project-specific rules only when necessary.
+
+Stop immediately and report when continuing would be unsafe or outside the instruction:
 
 - Work requires touching files outside the instruction scope.
-- Build or tests fail.
-- Implementation requires changing a protected behavior.
-- A temporary workaround becomes necessary.
-- Existing behavior may change.
+- A protected behavior must change.
+- The current work causes a new build or test failure.
+
+Wait for Manager approval when a direction decision is required:
+
+- The goal, scope, or acceptance criteria are ambiguous.
+- Judgment logic must change without explicit approval.
+- A temporary workaround or materially different implementation becomes necessary.
 - The work grows beyond the current phase.
 
-## Checkpoint Discipline
+Continue within scope and report afterward when the issue does not require a direction change:
 
-A checkpoint is not perfect completion.
-It means the work is stable enough for the Manager to decide the next move.
+- A pre-existing build or test failure remains unchanged.
+- An unrelated issue is discovered.
+- Optional verification cannot be run.
 
-Each checkpoint should define:
+## Verification
 
-- Goal
-- Scope
-- Non-goals
-- Verification
-- Stop conditions
-- Next decision point
+Acceptance criteria are the main test of whether the instruction goal was met.
+Commands are supporting evidence, not the goal.
+
+Repository review commands are optional.
+Use them only when the project is already managed by Git and they provide useful information.
+Do not create a Git repository only to run review commands.
+
+## File Hygiene
+
+- Keep the latest status at the top.
+- Compress old routine information.
+- Keep important active decisions in `Persistent Decisions`.
+- Move long design discussions into separate project documents when needed.
+- Keep `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` as entry points, not archives.

@@ -2,6 +2,13 @@
 
 Last updated: YYYY-MM-DD
 
+## Instruction ID
+
+`I-0001`
+
+Increment this ID whenever this instruction file is updated.
+Do not reuse an old ID, even when the current phase or checkpoint remains the same.
+
 ## Current Phase
 
 `<project area>`: `<phase/checkpoint name>`
@@ -15,19 +22,36 @@ Summarize the latest Coder report.
 - Verification:
 - Notes:
 
-## Basic Principle
+## Objective Alignment
 
-State the project's most important principle.
+Reference: `DUAL_MODEL_OPERATION.md` / `Project Objective`
 
-Examples:
+State how this instruction advances the project objective.
 
-- This tool provides evidence, not final judgment.
-- Uncertain inference must not be treated as fact.
-- Behavior changes must be explicit.
+- `<contribution to the project objective>`
 
-## Current Decision
+## Principle Application
 
-State the Manager decision for this phase.
+Reference: `DUAL_MODEL_OPERATION.md` / `Project Principle`
+
+State how the project principle applies to this instruction.
+
+- `<application to the current instruction>`
+
+## Persistent Decisions
+
+List important active decisions that future instructions must not forget.
+Copy each active item into the next version of this file.
+Remove an item only after the Manager explicitly decides that it no longer applies.
+Do not use this section for routine status or temporary issues.
+
+- `<decision to preserve or None>`
+
+## Manager Decision
+
+State whether the previous Coder report is accepted and what happens next.
+
+Status: `<Not Yet Reviewed | Accepted | Needs Follow-up>`
 
 - Next phase:
 - Why now:
@@ -45,41 +69,35 @@ The goal is <goal>.
 Do not change behavior.
 ```
 
-## Scope
+## Scope And Boundaries
 
 Allowed changes:
 
 - `<file or responsibility>`
 
-Protected areas:
+Must not change:
 
 - `<file or behavior>`
 
-Candidate new files:
+New files allowed:
 
-- `<new file>`
+- `<new file or None>`
 
 ## Required Shape
 
-Describe the expected code or file shape.
+Use this section only when a specific code or file shape is necessary.
+Otherwise write `Not specified` and let the Coder follow the existing project style.
 
 ```text
-<expected call shape or layout>
+<expected call shape, layout, or Not specified>
 ```
 
-## Boundaries
+## Acceptance Criteria
 
-Allowed:
+List one to three observable conditions that must be true for Manager review.
 
-- `<allowed change>`
-
-Do not change:
-
-- `<protected behavior>`
-
-Explicitly forbidden:
-
-- `<forbidden change>`
+- `<condition that must be true>`
+- `<behavior that must remain unchanged>`
 
 ## Verification
 
@@ -95,28 +113,40 @@ Additional verification:
 <optional command>
 ```
 
-## Diff Review
+## Optional Repository Review
 
-Check these after implementation:
+Use repository review commands only when the project is already managed by Git and the commands provide useful information.
+Do not create a Git repository only to run these commands.
 
 ```powershell
 git diff --stat
 git status --short
 ```
 
-Expected diff:
+Expected repository changes:
 
-- `<expected diff>`
+- `<expected change or Not applicable>`
 
 ## Stop Conditions
 
-Stop and report if:
+Stop immediately and report if:
 
-- Build or tests fail.
 - Work requires touching files outside scope.
-- Existing behavior must change.
-- Judgment logic must change.
-- A temporary workaround becomes necessary.
+- A protected behavior must change.
+- The current work causes a new build or test failure.
+
+Wait for Manager approval before continuing if:
+
+- The goal, scope, or acceptance criteria are ambiguous.
+- Judgment logic must change without explicit approval.
+- A temporary workaround or materially different implementation becomes necessary.
+- The work grows beyond the current phase.
+
+Continue within scope and report afterward if:
+
+- A pre-existing build or test failure remains unchanged.
+- An unrelated issue is discovered.
+- Optional verification cannot be run.
 
 ## Coder Status Update Required
 
@@ -126,12 +156,12 @@ Include:
 
 - Current Phase
 - Files changed
+- Acceptance criteria results
 - Build/test results
-- Whether the phase is complete
+- Whether work is in progress, blocked, or ready for Manager review
 - Recommended next step
 - Questions for Manager
 
-## Manager Note
+## Additional Context
 
-Add Manager-only clarification here.
-Use this section to prevent ambiguity for the Coder.
+Add clarification only when it helps the Coder execute the current instruction.

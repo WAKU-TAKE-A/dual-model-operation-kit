@@ -2,6 +2,12 @@
 
 Last updated: YYYY-MM-DD
 
+## Based On Instruction ID
+
+`I-0001`
+
+Copy the `Instruction ID` from the `MANAGER_INSTRUCTIONS.md` used for this work.
+
 ## Current Phase
 
 `<project area>`: `<phase/checkpoint name>`
@@ -12,6 +18,12 @@ Summarize the completed work.
 
 - `<changed file>`: `<what changed>`
 - `<changed file>`: `<what changed>`
+
+## Acceptance Criteria Result
+
+Report each condition from `MANAGER_INSTRUCTIONS.md`.
+
+- `<condition>`: `<Pass | Fail | Not Verified>`
 
 ## Verification
 
@@ -33,13 +45,14 @@ Result:
 <important output summary>
 ```
 
-## Current Result
+## Coder Result
 
-State whether the phase is complete.
+Report implementation status. The Manager decides whether the phase is accepted.
 
-- Complete:
-- Incomplete:
+Status: `<In Progress | Blocked | Ready for Manager Review>`
+
 - Reason:
+- Remaining work:
 
 ## Open Questions
 
@@ -49,9 +62,10 @@ List questions for the Manager.
 
 ## Next Recommendation
 
-State the next step from the Coder's point of view.
+Optionally state the next step from the Coder's point of view.
+Keep it within the current project objective. Do not expand scope.
 
-- `<next candidate>`
+- `<next candidate or None>`
 
 ## Notes
 
@@ -61,7 +75,3 @@ Add operational notes.
 - Untracked files:
 - Diff risks:
 - Skipped verification:
-
-## Previous Notes
-
-Compress older reports here.
