@@ -22,13 +22,12 @@ While it is `Provisional`, investigation and reversible preparation may continue
 Example:
 
 ```text
-Make large code changes safer to complete across multiple AI sessions without losing the user's intended outcome.
+Provide a Windows application that extracts document structure from PDF files using text position and font information.
 ```
 
 ## Project Principle
 
-This section is the single source of truth for the project's most important operating principle.
-Do not create another source for the principle in other operation files.
+Maintain this section as the sole source of truth for the project's most important operating principle.
 
 Status: `<Provisional | Confirmed>`
 
@@ -38,8 +37,8 @@ AI agents must not mark a proposed principle `Confirmed` without user confirmati
 Example:
 
 ```text
-This tool should provide evidence and navigation, not final judgment.
-Uncertain inference must not be silently treated as fact.
+Document structure must be derived from observable PDF evidence.
+Inferred structure must remain distinguishable from extracted structure.
 ```
 
 Both roles use the principle as a decision boundary.
@@ -83,7 +82,7 @@ These files are current entry points, not full conversation archives.
 
 The Manager:
 
-- Decides goals, priorities, checkpoints, and non-goals.
+- Decides goals, priorities, architectural direction, checkpoints, and non-goals.
 - Keeps each instruction aligned with the current project objective.
 - Uses checkpoints as stable review points, not as requirements for perfect completion.
 - Plans only as far as needed for the next bounded checkpoint.
@@ -157,7 +156,6 @@ Do not create a Git repository only to run review commands.
 ## File Hygiene
 
 - Keep the latest status at the top.
-- Compress old routine information.
 - Keep important active decisions in `Persistent Decisions`.
 - Move long design discussions into separate project documents when needed.
 - Keep `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` as entry points, not archives.
