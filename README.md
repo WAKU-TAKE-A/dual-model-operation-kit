@@ -38,6 +38,14 @@ CODER_STATUS.md
 9. Manager役のAIに `CODER_STATUS.md` を読ませます。
 10. 以後、6〜9を繰り返します。
 
+## サブエージェントモード（任意）
+
+Manager役とCoder役を、同一ランタイムのサブエージェント機能（例: Claude Codeのサブエージェント）で実行できる場合、手順6・7を短縮できます。
+
+- Managerがサブエージェントとして直接Coderを呼び出し、`MANAGER_INSTRUCTIONS.md`をユーザーが手動で受け渡す必要がなくなります。
+- ただし`MANAGER_INSTRUCTIONS.md`と`CODER_STATUS.md`への書き込みは省略しません。Instruction ID単位の粒度を維持し、複数の指示をまとめて1回で報告しません。
+- Manager役とCoder役に異なるベンダー/モデルを使う場合（例: ManagerはClaude、CoderはGPT）は、従来どおり手動でのファイル受け渡しが必要です。サブエージェントモードは同一ランタイム内で完結する場合のみの短縮です。
+
 ## 役割
 
 Manager は「何をするか」「何をしないか」「どこまで変えてよいか」「完了条件」を決める。
