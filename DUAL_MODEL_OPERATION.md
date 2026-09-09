@@ -121,6 +121,16 @@ The Coder's next recommendation must stay within the current project objective a
 6. Manager updates `MANAGER_INSTRUCTIONS.md` with a new `Instruction ID` and carries forward active persistent decisions.
 7. Repeat from step 1.
 
+### Sub-Agent Variant
+
+When the Manager and Coder run as sub-agents within the same runtime (for example, a native sub-agent feature that lets one agent invoke another and receive its result), steps 6 and 7 of the Workflow may be shortened: the Manager may invoke the Coder directly instead of relying on the user to relay `MANAGER_INSTRUCTIONS.md`.
+
+This variant does not change the file contract:
+
+- `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` must still be written, at the same granularity as manual mode — one `CODER_STATUS.md` update per `Instruction ID`, never a single summary covering multiple instructions.
+- Batching reports across instructions is not allowed; it loses per-acceptance-criterion verification detail and breaks Stop And Recheck timing.
+- This variant only removes the user's manual file hand-off. It does not apply when the Manager and Coder are different vendors/models running in separate sessions, where manual hand-off remains required.
+
 ## Stop And Recheck
 
 Use three responses. Add project-specific rules only when necessary.
