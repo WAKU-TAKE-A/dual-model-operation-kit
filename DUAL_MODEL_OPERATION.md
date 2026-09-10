@@ -76,7 +76,17 @@ It states:
 - Whether work is in progress, blocked, or ready for Manager review
 - Open questions and the Coder's next recommendation
 
-These files are current entry points, not full conversation archives.
+### `STEPS.md`
+
+Updated by the Manager, at the same time the Manager reads a new `CODER_STATUS.md` report (Workflow step 5), before writing the next instruction.
+
+This is a cumulative, human-readable progress report for the user. Unlike `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md`, it is not compressed and not overwritten — each Step is appended and kept.
+
+Each Step corresponds to one `Instruction ID`. At project start, the Manager and user typically estimate how many Steps (Instruction IDs) the project is expected to take; `STEPS.md` tracks that against actual progress.
+
+`STEPS.md` is not a source of truth. The sole source of truth for the objective and principle remains `Project Objective` and `Project Principle` in this document, and the Coder's sole current contract remains `MANAGER_INSTRUCTIONS.md`. `STEPS.md` may summarize loosely, reword freely, and lag slightly behind — it exists to inform the user, not to bind either role.
+
+These files are current entry points, not full conversation archives. `STEPS.md` is the deliberate exception: it is the archive.
 
 ## Manager Responsibilities
 
@@ -90,6 +100,7 @@ The Manager:
 - Reads the current `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` before writing the next instruction.
 - Confirms that `Based On Instruction ID` matches the current `Instruction ID`.
 - Decides whether a Coder report is `Accepted` or `Needs Follow-up`.
+- Updates `STEPS.md` after reading each `CODER_STATUS.md` report, before writing the next instruction.
 - Assigns a new `Instruction ID` whenever instructions are updated, even if the checkpoint is unchanged.
 - Carries every active item in `Persistent Decisions` into the next instruction.
 - Removes a persistent decision only after explicitly deciding that it no longer applies.
@@ -117,7 +128,7 @@ The Coder's next recommendation must stay within the current project objective a
 2. Coder implements or investigates only within the stated instruction.
 3. Coder verifies the work and updates `CODER_STATUS.md`.
 4. Manager reads the current instruction and Coder report.
-5. Manager confirms that the instruction IDs match and decides whether the report is accepted or needs follow-up.
+5. Manager confirms that the instruction IDs match, decides whether the report is accepted or needs follow-up, and updates `STEPS.md` accordingly.
 6. Manager updates `MANAGER_INSTRUCTIONS.md` with a new `Instruction ID` and carries forward active persistent decisions.
 7. Repeat from step 1.
 
@@ -127,7 +138,7 @@ When the Manager and Coder run as sub-agents within the same runtime (for exampl
 
 This variant does not change the file contract:
 
-- `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` must still be written, at the same granularity as manual mode — one `CODER_STATUS.md` update per `Instruction ID`, never a single summary covering multiple instructions.
+- `MANAGER_INSTRUCTIONS.md`, `CODER_STATUS.md`, and `STEPS.md` must still be written, at the same granularity as manual mode — one `CODER_STATUS.md` update per `Instruction ID`, never a single summary covering multiple instructions.
 - Batching reports across instructions is not allowed; it loses per-acceptance-criterion verification detail and breaks Stop And Recheck timing.
 - This variant only removes the user's manual file hand-off. It does not apply when the Manager and Coder are different vendors/models running in separate sessions, where manual hand-off remains required.
 
@@ -169,3 +180,4 @@ Do not create a Git repository only to run review commands.
 - Keep important active decisions in `Persistent Decisions`.
 - Move long design discussions into separate project documents when needed.
 - Keep `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` as entry points, not archives.
+- `STEPS.md` is the one exception to the compression rule above: it accumulates by design and is never compressed or overwritten.
