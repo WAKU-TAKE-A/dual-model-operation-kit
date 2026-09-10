@@ -15,6 +15,7 @@ dual-model-operation-kit/
   DUAL_MODEL_OPERATION.md
   MANAGER_INSTRUCTIONS.md
   CODER_STATUS.md
+  STEPS.md
 ```
 
 ## 使い方
@@ -22,20 +23,21 @@ dual-model-operation-kit/
 1. プロジェクトにこのフォルダをコピーします。
 2. ユーザーがプロジェクトの内容、計画書、AIとのやり取りの要点を整理します。
 3. `DUAL_MODEL_OPERATION.md` の `Project Objective` と `Project Principle` を確認します。ユーザーが指定していない場合、Manager役のAIが文脈から案を作り、`Provisional` としてユーザーに確認を求めます。
-4. Manager役とCoder役の両方に、次の4ファイルを読ませます。
+4. Manager役とCoder役の両方に、次の5ファイルを読ませます。
 
 ```text
 README.md
 DUAL_MODEL_OPERATION.md
 MANAGER_INSTRUCTIONS.md
 CODER_STATUS.md
+STEPS.md
 ```
 
 5. それぞれのAIに、自分の役割がManagerかCoderかを明示します。
 6. Manager役のAIが `MANAGER_INSTRUCTIONS.md` を更新します。
 7. Coder役のAIに `MANAGER_INSTRUCTIONS.md` を読ませます。
 8. Coder役のAIが作業し、`CODER_STATUS.md` を更新します。
-9. Manager役のAIに `CODER_STATUS.md` を読ませます。
+9. Manager役のAIに `CODER_STATUS.md` を読ませます。Managerはこのタイミングで `STEPS.md` も更新します。
 10. 以後、6〜9を繰り返します。
 
 ## サブエージェントモード（任意）
@@ -71,6 +73,7 @@ Coder は、範囲外の変更・仕様判断・設計判断が必要になっ�
 - Coderにとって、現在の `MANAGER_INSTRUCTIONS.md` が唯一の作業契約です。
 - Managerにとって、現在の `MANAGER_INSTRUCTIONS.md` と `CODER_STATUS.md` が次の判断の入口です。
 - 古い情報は短く圧縮し、現在の状態を先頭に置きます。
+- ユーザー向けの累積した進捗の要約は `STEPS.md` にあります。これは正本ではなく、多少ずれても構わない要約です。
 
 ## 最小ルール
 
