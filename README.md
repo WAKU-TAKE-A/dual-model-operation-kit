@@ -34,10 +34,10 @@ STEPS.md
 ```
 
 5. それぞれのAIに、自分の役割がManagerかCoderかを明示します。
-6. Manager役のAIが `MANAGER_INSTRUCTIONS.md` を更新します。
-7. Coder役のAIに `MANAGER_INSTRUCTIONS.md` を読ませます。
+6. Manager役のAIが `MANAGER_INSTRUCTIONS.md` を初回作成・更新します。初回作成時、Managerは同時に `STEPS.md` を初期化します。
+7. Coder役のAIに `MANAGER_INSTRUCTIONS.md` を読ませます。Coderは `STEPS.md` を文脈理解のためだけに読み、直接編集したり、先のStepを勝手に実装したりしてはいけません。作業の契約は常に現在の `MANAGER_INSTRUCTIONS.md` だけです。
 8. Coder役のAIが作業し、`CODER_STATUS.md` を更新します。
-9. Manager役のAIに `CODER_STATUS.md` を読ませます。Managerはこのタイミングで `STEPS.md` も更新します。
+9. Manager役のAIに `CODER_STATUS.md` を読ませます。Managerはこのタイミングで `STEPS.md` を更新します。
 10. 以後、6〜9を繰り返します。
 
 ## サブエージェントモード（任意）
@@ -70,7 +70,7 @@ Coder は、範囲外の変更・仕様判断・設計判断が必要になっ�
 - プロジェクト目標の正本は `DUAL_MODEL_OPERATION.md` の `Project Objective` だけです。
 - プロジェクト原則の正本は `DUAL_MODEL_OPERATION.md` の `Project Principle` だけです。
 - AIは未指定の目標や原則を提案できますが、ユーザー確認なしに `Confirmed` にしません。
-- Coderにとって、現在の `MANAGER_INSTRUCTIONS.md` が唯一の作業契約です。
+- Coderにとって、現在の `MANAGER_INSTRUCTIONS.md` が唯一の作業契約です。Coderが `STEPS.md` の先のStepを先回りして実装することはありません。
 - Managerにとって、現在の `MANAGER_INSTRUCTIONS.md` と `CODER_STATUS.md` が次の判断の入口です。
 - 古い情報は短く圧縮し、現在の状態を先頭に置きます。
 - ユーザー向けの累積した進捗の要約は `STEPS.md` にあります。これは正本ではなく、多少ずれても構わない要約です。

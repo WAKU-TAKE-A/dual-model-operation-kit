@@ -15,6 +15,11 @@ Keep it outcome-focused. Do not turn it into a task list or implementation plan.
 
 Status: `<Provisional | Confirmed>`
 
+Current objective:
+```text
+<Write the current project objective here>
+```
+
 If the user has not specified an objective, the Manager proposes one from the project context and marks it `Provisional`.
 AI agents must not mark a proposed objective `Confirmed` without user confirmation.
 While it is `Provisional`, investigation and reversible preparation may continue, but material direction changes require user confirmation.
@@ -30,6 +35,11 @@ Provide a Windows application that extracts document structure from PDF files us
 Maintain this section as the sole source of truth for the project's most important operating principle.
 
 Status: `<Provisional | Confirmed>`
+
+Current principle:
+```text
+<Write the current project principle here>
+```
 
 If the user has not specified a principle, the Manager proposes one from the project context and marks it `Provisional`.
 AI agents must not mark a proposed principle `Confirmed` without user confirmation.
@@ -78,11 +88,11 @@ It states:
 
 ### `STEPS.md`
 
-Updated by the Manager, at the same time the Manager reads a new `CODER_STATUS.md` report (Workflow step 5), before writing the next instruction.
+Updated by the Manager. The Manager initializes `STEPS.md` at project start (when issuing `I-0001`) with the initial Step estimate, and updates it at the same time the Manager reads a new `CODER_STATUS.md` report (Workflow step 5), before writing the next instruction.
 
 This is a cumulative, human-readable progress report for the user. Unlike `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md`, it is not compressed and not overwritten — each Step is appended and kept.
 
-Each Step corresponds to one `Instruction ID`. At project start, the Manager and user typically estimate how many Steps (Instruction IDs) the project is expected to take; `STEPS.md` tracks that against actual progress.
+Each Step typically corresponds to one `Instruction ID`. At project start, the Manager and user estimate how many Steps the project is expected to take; `STEPS.md` tracks that against actual progress. When reviewing a report, if a Step requires follow-up, the Manager records the new `Instruction ID` associated with that Step.
 
 `STEPS.md` is not a source of truth. The sole source of truth for the objective and principle remains `Project Objective` and `Project Principle` in this document, and the Coder's sole current contract remains `MANAGER_INSTRUCTIONS.md`. `STEPS.md` may summarize loosely, reword freely, and lag slightly behind — it exists to inform the user, not to bind either role.
 
@@ -100,7 +110,7 @@ The Manager:
 - Reads the current `MANAGER_INSTRUCTIONS.md` and `CODER_STATUS.md` before writing the next instruction.
 - Confirms that `Based On Instruction ID` matches the current `Instruction ID`.
 - Decides whether a Coder report is `Accepted` or `Needs Follow-up`.
-- Updates `STEPS.md` after reading each `CODER_STATUS.md` report, before writing the next instruction.
+- Initializes `STEPS.md` at project start, and updates `STEPS.md` after reading each `CODER_STATUS.md` report (including recording when a Step requires follow-up via a new `Instruction ID`), before writing the next instruction.
 - Assigns a new `Instruction ID` whenever instructions are updated, even if the checkpoint is unchanged.
 - Carries every active item in `Persistent Decisions` into the next instruction.
 - Removes a persistent decision only after explicitly deciding that it no longer applies.
@@ -113,6 +123,7 @@ The Coder:
 - Reads `MANAGER_INSTRUCTIONS.md` before starting.
 - Copies its `Instruction ID` into `Based On Instruction ID` in `CODER_STATUS.md`.
 - Works only within the stated scope and boundaries.
+- Must not edit `STEPS.md` and must not implement future or unstarted Steps listed in `STEPS.md`. The current `MANAGER_INSTRUCTIONS.md` is the only operational contract.
 - Follows `Persistent Decisions`.
 - Runs the requested verification.
 - Reports `Pass`, `Fail`, or `Not Verified` for each acceptance criterion.

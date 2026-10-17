@@ -61,4 +61,7 @@ Stepを追記していく際のルール:
   STEPS.md自体の各Stepの記録は残す
 - 「最終目的」「確定方針」は要約であり、正本(DUAL_MODEL_OPERATION.md)と食い違っても
   致命的ではない。大きくずれてきたら見直す
+- Needs Follow-upなどで1つのStepに複数のInstruction IDが対応する場合、
+  全体STEPの表に行を追加するか、該当Step内に追記したInstruction IDを記録して、
+  ユーザーが実際の進捗を追えるようにする
 -->
