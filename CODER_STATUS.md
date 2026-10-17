@@ -4,7 +4,7 @@ Last updated: YYYY-MM-DD
 
 ## Based On Instruction ID
 
-`I-0001`
+`<I-0001>`
 
 Copy the `Instruction ID` from the `MANAGER_INSTRUCTIONS.md` used for this work.
 
@@ -15,6 +15,7 @@ Copy the `Instruction ID` from the `MANAGER_INSTRUCTIONS.md` used for this work.
 ## What Changed
 
 Summarize the completed work.
+If the instruction was investigation-only with no file modifications, write `None (investigation only)` and summarize findings.
 
 - `<changed file>`: `<what changed>`
 - `<changed file>`: `<what changed>`

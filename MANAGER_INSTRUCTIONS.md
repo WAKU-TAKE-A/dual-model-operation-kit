@@ -6,7 +6,8 @@ Last updated: YYYY-MM-DD
 
 `I-0001`
 
-Increment this ID whenever this instruction file is updated.
+Use `I-0001` for the first instruction at project start.
+Increment this ID (`I-0002`, `I-0003`, ...) whenever this instruction file is updated after that.
 Do not reuse an old ID, even when the current phase or checkpoint remains the same.
 
 ## Current Phase
@@ -16,6 +17,7 @@ Do not reuse an old ID, even when the current phase or checkpoint remains the sa
 ## Current Status
 
 Summarize the latest Coder report.
+Note: On the first instruction (`I-0001`, before any Coder report exists), record `Initial instruction (no prior Coder report)`.
 
 - Completed:
 - Remaining:
